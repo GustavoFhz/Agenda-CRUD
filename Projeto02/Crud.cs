@@ -13,12 +13,11 @@ namespace Projeto02
         public override void Alterar()
         {
             Console.WriteLine("Informe o nome do contato que deseja alterar");
-            string? nome = Console.ReadLine();
-
             for (int i = 0; i < Armazenamento.Contatos.Count; i++)
             {
                 Console.WriteLine($"{i + 1} {Armazenamento.Contatos[i].Nome}");
             }
+            string? nome = Console.ReadLine();
 
             
             var contatoExistente = Armazenamento.Contatos.FirstOrDefault(aluno => aluno.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
