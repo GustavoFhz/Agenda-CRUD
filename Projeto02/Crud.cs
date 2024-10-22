@@ -20,11 +20,8 @@ namespace Projeto02
                 Console.WriteLine($"{i + 1} {Armazenamento.Contatos[i].Nome}");
             }
 
-            Contato contato = new();
-
-            // Localizar o aluno pelo nome
-            var contatoExistente = Armazenamento.Contatos.FirstOrDefault(aluno => contato.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
-
+            
+            var contatoExistente = Armazenamento.Contatos.FirstOrDefault(aluno => aluno.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
             if (contatoExistente != null)
             {
                 Console.WriteLine("Escolha a opção que deseja alterar");
@@ -40,18 +37,21 @@ namespace Projeto02
                         Console.WriteLine("Informe a nova data de nascimento:");
                         string data = Console.ReadLine();
 
+
                         DateTime dataNascimento;
                         bool sucesso = DateTime.TryParseExact(data, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dataNascimento);
 
                         if (sucesso)
                         {
-                            contato.DataNascimento = dataNascimento;
-                            Console.WriteLine($"Data de nascimento {contato.DataNascimento.ToString("dd/MM/yyyy")}");
+                            contatoExistente.DataNascimento = dataNascimento;
+                            Console.WriteLine($"Data de nascimento {contatoExistente.DataNascimento.ToString("dd/MM/yyyy")}");
+                            // Cadastrar nova data ao contato
                         }
                         else
                         {
                             Console.WriteLine("Formato de data inválido. Por favor, insira no formato correto (dd/MM/yyyy).");
-                        } break;
+                        }
+                        break;
                     case 3:
                         Console.WriteLine("Informe o novo email:");
                         contatoExistente.Email = Console.ReadLine(); break;
@@ -70,7 +70,7 @@ namespace Projeto02
             {
                 Console.WriteLine($"Contato com o nome {nome} não foi encontrado.");
             }
-            
+
         }
 
         public override void Cadastrar()
@@ -107,6 +107,9 @@ namespace Projeto02
 
             Console.WriteLine("Informe a cidade");
             contato.Cidade = Console.ReadLine();
+
+            // Adicionado o cadastro de contatos na Lista
+            Armazenamento.Contatos.Add(contato);
         }
 
         public override void ObterAniversario()
@@ -114,12 +117,12 @@ namespace Projeto02
             int mesAtual = DateTime.Now.Month;
 
             Contato contato = new();
-            
+
             var aniversarianteMes = Armazenamento.Contatos.Where(conato => conato.DataNascimento.Month == mesAtual).ToList();
 
             Console.WriteLine($"Aniversariante do mês {mesAtual}");
 
-            foreach(var pessoa in aniversarianteMes)
+            foreach (var pessoa in aniversarianteMes)
             {
                 Console.WriteLine($"{pessoa.Nome} - Aniversário em {pessoa.DataNascimento.Day} / {pessoa.DataNascimento.Month}");
             }
@@ -134,14 +137,17 @@ namespace Projeto02
             Console.WriteLine("Informe o nome do contato que deseja remover");
             string nome = Console.ReadLine();
 
-            for(int i = 0; i < Armazenamento.Contatos.Count; i++)
+            for (int i = 0; i < Armazenamento.Contatos.Count; i++)
             {
-                Console.WriteLine($"{i+1} {Armazenamento.Contatos[i].Nome}");
+                Console.WriteLine($"{i + 1} {Armazenamento.Contatos[i].Nome}");
             }
-            Contato contato = new();
-            var aluno = Armazenamento.Contatos.FirstOrDefault(aluno => contato.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+           
 
-            if( aluno != null)
+            var contato = Armazenamento.Contatos.FirstOrDefault(a => a.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
+            
+
+            
+            if (contato != null)
             {
                 Armazenamento.Contatos.Remove(contato);
                 Console.WriteLine($"O contato {nome} foi removido com sucesso");
@@ -154,7 +160,7 @@ namespace Projeto02
 
         public override void Selecionar()
         {
-            for(int i = 0; i < Armazenamento.Contatos.Count; i++)
+            for (int i = 0; i < Armazenamento.Contatos.Count; i++)
             {
                 Console.WriteLine($"Nome: {Armazenamento.Contatos[i].Nome}");
                 Console.WriteLine($"Data de nascimento: {Armazenamento.Contatos[i].DataNascimento}");
@@ -164,9 +170,9 @@ namespace Projeto02
                 Console.WriteLine($"Cidade: {Armazenamento.Contatos[i].Cidade}");
             }
 
-            ObterAniversario();
+            
         }
-       
+
     }
-    
+
 }
