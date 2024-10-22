@@ -134,13 +134,12 @@ namespace Projeto02
         public override void Remover()
         {
             Console.WriteLine("Informe o nome do contato que deseja remover");
-            string nome = Console.ReadLine();
 
             for (int i = 0; i < Armazenamento.Contatos.Count; i++)
             {
                 Console.WriteLine($"{i + 1} {Armazenamento.Contatos[i].Nome}");
             }
-           
+            string nome = Console.ReadLine();
 
             var contato = Armazenamento.Contatos.FirstOrDefault(a => a.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase));
             
